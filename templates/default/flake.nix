@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     janet-nix = {
-      url = "github.com/turnerdev/janet-nix";
+      url = "github:turnerdev/janet-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
