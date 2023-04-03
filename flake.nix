@@ -53,7 +53,7 @@
         mkJanet = { name, version, src, entryPoint }:
           with final;
           let
-            deps = (import (pkgs.runCommandLocal "test" {
+            deps = (import (pkgs.runCommandLocal "run-janet-nix" {
               inherit src;
               buildInputs = [ janet-nix ];
             } ''
