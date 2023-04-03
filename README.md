@@ -10,6 +10,7 @@ Install dependencies for the current project create a lockfile:
 ```bash
 jpm deps
 jpm make-lockfile
+git add lockfile.jdn
 ```
 
 ## Usage
