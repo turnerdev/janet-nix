@@ -50,7 +50,7 @@
           buildInputs = [ janet ];
           shellHook = ''
             # mount jpm dependency paths
-            export JANET_PATH="$PWD/.jpm"";
+            export JANET_PATH="$PWD/.jpm";
             export JANET_TREE=$JANET_PATH/jpm_tree
             export JANET_LIBPATH="${pkgs.janet}/lib";
             export JANET_HEADERPATH="${pkgs.janet}/include/janet";
