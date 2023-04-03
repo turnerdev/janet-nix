@@ -30,13 +30,13 @@
 
             buildPhase = ''
               # mount jpm dependency paths
-              export JANET_PATH="$PWD/.jpmbuild";
+              export JANET_PATH="$PWD/.jpm"";
               export JANET_TREE=$JANET_PATH/jpm_tree
-              mkdir -p $JANET_TREE;
-              export PATH="$PATH;$JANET_PATH/bin";
               export JANET_LIBPATH="${pkgs.janet}/lib";
               export JANET_HEADERPATH="${pkgs.janet}/include/janet";
               export JANET_BUILDPATH="$JANET_PATH/build"
+              export PATH="$PATH;$JANET_PATH/bin";
+              mkdir -p $JANET_TREE;
               mkdir -p $JANET_BUILDPATH
 
               jpm build
@@ -69,13 +69,13 @@
 
             buildPhase = ''
               # mount jpm dependency paths
-              export JANET_PATH="$PWD/.jpmbuild";
+              export JANET_PATH="$PWD/.jpm"";
               export JANET_TREE=$JANET_PATH/jpm_tree
-              mkdir -p $JANET_TREE;
-              export PATH="$PATH;$JANET_PATH/bin";
               export JANET_LIBPATH="${pkgs.janet}/lib";
               export JANET_HEADERPATH="${pkgs.janet}/include/janet";
               export JANET_BUILDPATH="$JANET_PATH/build"
+              export PATH="$PATH;$JANET_PATH/bin";
+              mkdir -p $JANET_TREE;
               mkdir -p $JANET_BUILDPATH
               mkdir -p "$PWD/.pkgs"
 
@@ -123,12 +123,14 @@
           buildInputs = [ janet ];
           shellHook = ''
             # mount jpm dependency paths
-            export JANET_PATH="$PWD/.jpm";
+            export JANET_PATH="$PWD/.jpm"";
             export JANET_TREE=$JANET_PATH/jpm_tree
-            mkdir -p $JANET_TREE;
-            export PATH="$PATH;$JANET_PATH/bin";
             export JANET_LIBPATH="${pkgs.janet}/lib";
             export JANET_HEADERPATH="${pkgs.janet}/include/janet";
+            export JANET_BUILDPATH="$JANET_PATH/build"
+            export PATH="$PATH;$JANET_PATH/bin";
+            mkdir -p $JANET_TREE;
+            mkdir -p $JANET_BUILDPATH
           '';
         });
     };

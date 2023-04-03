@@ -49,14 +49,15 @@
           packages = [ janet jpm ];
           buildInputs = [ janet ];
           shellHook = ''
-            set -a
-            export JANET_PATH="$PWD/.jpm";
+            # mount jpm dependency paths
+            export JANET_PATH="$PWD/.jpm"";
             export JANET_TREE=$JANET_PATH/jpm_tree
-            mkdir -p $JANET_TREE;
-            export PATH="$PATH;$JANET_PATH/bin";
             export JANET_LIBPATH="${pkgs.janet}/lib";
             export JANET_HEADERPATH="${pkgs.janet}/include/janet";
-            set +a 
+            export JANET_BUILDPATH="$JANET_PATH/build"
+            export PATH="$PATH;$JANET_PATH/bin";
+            mkdir -p $JANET_TREE;
+            mkdir -p $JANET_BUILDPATH
           '';
         });
     };
