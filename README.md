@@ -1,5 +1,5 @@
 # janet-nix
-[nix flake](https://nixos.wiki/wiki/Flakes) helpers for [Janet](https://janet-lang.org/) projects using the [jpm](https://janet-lang.org/docs/jpm.html) package manager.
+[nix flake](https://nixos.wiki/wiki/Flakes) helpers for [Janet](https://janet-lang.org/) projects using [jpm](https://janet-lang.org/docs/jpm.html) (Janet Project Manager).
 
 Should be considered alpha.
 
