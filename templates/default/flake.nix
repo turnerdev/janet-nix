@@ -32,15 +32,16 @@
       };
 
       packages = forAllSystems (system: {
-        example = janet-nix.packages.${system}.mkJanet {
-          name = "example";
+        my-new-program = janet-nix.packages.${system}.mkJanet {
+          name = "my-new-program";
           version = "0.0.1";
           src = ./.;
           entryPoint = ./init.janet;
         };
       });
 
-      defaultPackage = forAllSystems (system: self.packages.${system}.example);
+      defaultPackage =
+        forAllSystems (system: self.packages.${system}.my-new-program);
 
       devShell = forAllSystems (system:
         with nixpkgsFor.${system};
