@@ -4,5 +4,7 @@
   :version "0.0.0"
   :dependencies ["spork"])
 
-(declare-source
-  :source ["init.janet"])
+(declare-executable
+  :name "my-new-program"
+  :entry "init.janet"
+  :install true)
