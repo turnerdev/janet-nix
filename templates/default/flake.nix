@@ -36,7 +36,7 @@
           name = "my-new-program";
           version = "0.0.1";
           src = ./.;
-          entryPoint = ./init.janet;
+          entry = ./init.janet;
         };
       });
 

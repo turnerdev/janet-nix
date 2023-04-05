@@ -50,7 +50,7 @@
             '';
           };
 
-        mkJanet = { name, version, src, entryPoint }:
+        mkJanet = { name, version, src, entry, buildInputs ? [ ] }:
           with final;
           let
             deps = (import (pkgs.runCommandLocal "run-janet-nix" {
@@ -61,11 +61,10 @@
               janet-nix > $out
             ''));
             sources = (builtins.map builtins.fetchGit deps);
-
           in stdenv.mkDerivation {
-            inherit name version sources src entryPoint;
+            inherit name version src sources entry;
 
-            buildInputs = [ janet jpm ];
+            buildInputs = [ janet jpm ] ++ buildInputs;
 
             buildPhase = ''
               # localize jpm dependency paths
@@ -93,7 +92,7 @@
               done
 
               jpm build
-              jpm quickbin "$entryPoint" $name'';
+              jpm quickbin "$entry" $name'';
 
             installPhase = ''
               mkdir -p $out/bin
