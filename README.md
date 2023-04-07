@@ -22,9 +22,8 @@ Use `mkJanet` to create derivations:
   packages = forAllSystems (system: {
     my-new-program = janet-nix.packages.${system}.mkJanet {
       name = "my-new-program";
-      version = "0.0.1";
       src = ./.;
-      entry = ./init.janet;
+      entry = "./init.janet";
     };
   });
 }

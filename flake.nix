@@ -50,7 +50,7 @@
             '';
           };
 
-        mkJanet = { name, version, src, entry, buildInputs ? [ ] }:
+        mkJanet = { name, src, entry, version ? null, buildInputs ? [ ] }:
           with final;
           let
             deps = (import (pkgs.runCommandLocal "run-janet-nix" {
