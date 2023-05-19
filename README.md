@@ -5,7 +5,7 @@ Should be considered alpha.
 
 ## Prerequisites
 
-Install dependencies for the current project create a lockfile:
+Install dependencies for the current project and create a lockfile:
 
 ```bash
 jpm deps
