@@ -102,9 +102,15 @@
           };
       };
 
-      templates.default = {
-        path = ./templates/default;
-        description = "A simple janet-nix project";
+      templates = {
+        default = {
+          path = ./templates/default;
+          description = "A simple janet-nix project";
+        };
+        full = {
+          path = ./templates/full;
+          description = "A janet-nix project with dev tools";
+        };
       };
 
       packages = forAllSystems (system: {

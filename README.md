@@ -47,5 +47,11 @@ git init
 git add .
 ```
 
+Alternatively, use the `full` template to include other development tools (only [jfmt](https://github.com/andrewchambers/jfmt) as of now): 
+
+```bash
+nix flake new --template github:turnerdev/janet-nix#full ./my-new-project
+```
+
 # License
 MIT
