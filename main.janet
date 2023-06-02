@@ -24,7 +24,7 @@
 
 (defn nix-source
   [{:url url :tag rev}]
-  (string `  { url = "` url `"; rev = "` rev `"; }`))
+  (string `  { url = "` url `"; rev = "` rev `"; submodules = true; }`))
 
 (defn load-lockfile
   "Load packages from a lockfile."

@@ -40,12 +40,12 @@
               mkdir -p "$JANET_BUILDPATH"
 
               jpm build
-              jpm quickbin main.janet $name
+              jpm quickbin main.janet quickbin-out
             '';
 
             installPhase = ''
               mkdir -p $out/bin
-              cp $name $out/bin/
+              mv quickbin-out $out/bin/$name
               chmod +x $out/bin/$name
             '';
           };
@@ -92,11 +92,11 @@
               done
 
               jpm build
-              jpm quickbin "$entry" $name'';
+              jpm quickbin "$entry" quickbin-out'';
 
             installPhase = ''
               mkdir -p $out/bin
-              cp $name $out/bin/
+              mv quickbin-out $out/bin/$name
               chmod +x $out/bin/$name
             '';
           };
