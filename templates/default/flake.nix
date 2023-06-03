@@ -36,7 +36,7 @@
           name = "my-new-program";
           version = "0.0.1";
           src = ./.;
-          entry = ./init.janet;
+          quickbin = ./init.janet;
         };
       });
 

@@ -50,19 +50,24 @@
             '';
           };
 
-        mkJanet = { name, src, entry, version ? null, buildInputs ? [ ] }:
+        mkJanet = { name, src, main ? null, quickbin ? null, version ? null
+          , bin ? null, buildInputs ? [ ], extraDeps ? [ ] }:
           with final;
           let
             deps = (import (pkgs.runCommandLocal "run-janet-nix" {
               inherit src;
               buildInputs = [ janet-nix ];
             } ''
-              cp $src/lockfile.jdn .
-              janet-nix > $out
+              if [ -f "$src/lockfile.jdn" ]; then
+                cp $src/lockfile.jdn .
+                janet-nix > $out
+              else
+                echo "[]" > $out
+              fi
             ''));
-            sources = (builtins.map builtins.fetchGit deps);
+            sources = (builtins.map builtins.fetchGit (deps ++ extraDeps));
           in stdenv.mkDerivation {
-            inherit name version src sources entry;
+            inherit name version src main quickbin bin sources;
 
             buildInputs = [ janet jpm ] ++ buildInputs;
 
@@ -80,23 +85,43 @@
 
               # fetch packages from the lockfile, mount repos
               for source in $sources; do
-                 cp -r "$source" "$PWD/.pkgs"
+                cp -r "$source" "$PWD/.pkgs"
               done
               chmod +w -R "$PWD/.pkgs"
 
               # install each package
               for source in "$PWD/.pkgs/"*; do
-                 pushd "$source"
-                 jpm install
-                 popd
+                pushd "$source"
+                jpm install
+                popd
               done
 
               jpm build
-              jpm quickbin "$entry" quickbin-out'';
+              jpm install
+
+              # if passed a main script, copy it into the project and use it for quickbin
+              if [ -n "$main" ]; then
+                quickbin=janet-nix-main.janet
+                echo "$main" > $quickbin
+              fi
+
+              if [ -n "$quickbin" ]; then
+                jpm quickbin "$quickbin" quickbin-out
+              fi
+            '';
 
             installPhase = ''
               mkdir -p $out/bin
-              mv quickbin-out $out/bin/$name
+
+              # if we have quickbin output, use that as the result
+              if [ -f "quickbin-out" ]; then
+                mv quickbin-out $out/bin/$name
+
+              # else if a binary is explicitly passed to mkJanet, use that
+              elif [ -n "$bin" ]; then
+                mv "$JANET_TREE/bin/$bin" $out/bin/$name
+              fi
+
               chmod +x $out/bin/$name
             '';
           };
