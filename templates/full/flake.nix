@@ -69,7 +69,7 @@
             mkdir -p "$JANET_BUILDPATH"
 
             # install judge as a local script
-            if ! command -v <the_command> &> /dev/null
+            if ! command -v judge &> /dev/null
             then
                 jpm install "https://github.com/ianthehenry/judge.git"
                 exit
