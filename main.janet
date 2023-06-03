@@ -30,12 +30,14 @@
   "Load packages from a lockfile."
   [&opt filename]
   (default filename "lockfile.jdn")
-  (def lockarray (parse (slurp filename)))
-  (do
-    (print "[")
-    (each bundle lockarray
-      (print (nix-source (resolve-bundle bundle))))
-    (print "]")))
+  (if (os/stat filename)
+    (do
+      (def lockarray (parse (slurp filename)))
+      (print "[")
+      (each bundle lockarray
+	(print (nix-source (resolve-bundle bundle))))
+      (print "]"))
+    (file/write stderr "No lockfile.jdn found")))
 
 (defn main
   [& args]

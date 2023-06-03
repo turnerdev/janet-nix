@@ -36,7 +36,7 @@
           name = "my-new-program";
           version = "0.0.1";
           src = ./.;
-          entry = ./init.janet;
+          quickbin = ./init.janet;
         };
         jfmt = janet-nix.packages.${system}.mkJanet {
           name = "jfmt";
@@ -44,7 +44,7 @@
             url = "https://github.com/andrewchambers/jfmt.git";
             rev = "b27dff6bb32b89b20462eec33f50c1583c301b0a";
           };
-          entry = "./jfmt.janet";
+          quickbin = "./jfmt.janet";
         };
       });
 
@@ -67,6 +67,13 @@
             export PATH="$PATH:$JANET_TREE/bin"
             mkdir -p "$JANET_TREE"
             mkdir -p "$JANET_BUILDPATH"
+
+            # install judge as a local script
+            if ! command -v <the_command> &> /dev/null
+            then
+                jpm install "https://github.com/ianthehenry/judge.git"
+                exit
+            fi
           '';
         });
     };
