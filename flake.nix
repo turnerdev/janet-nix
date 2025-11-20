@@ -3,7 +3,7 @@
 
   outputs = { self, nixpkgs }:
     let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
+      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = f:
         nixpkgs.lib.genAttrs supportedSystems (system: f system);
       nixpkgsFor = forAllSystems (system:
@@ -149,7 +149,7 @@
       devShell = forAllSystems (system:
         with nixpkgsFor.${system};
         mkShell {
-          packages = [ janet jpm cntr ];
+          packages = [ janet jpm ];
           buildInputs = [ janet ];
           shellHook = ''
             # localize jpm dependency paths
