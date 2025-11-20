@@ -14,23 +14,8 @@
       supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
       forAllSystems = f:
         nixpkgs.lib.genAttrs supportedSystems (system: f system);
-      nixpkgsFor = forAllSystems (system:
-        import nixpkgs {
-          inherit system;
-          overlays = [ self.overlay ];
-        });
+      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in {
-      overlay = final: prev: {
-
-        jpm = prev.jpm.overrideAttrs (old: rec {
-          src = builtins.fetchGit {
-            url = "https://github.com/janet-lang/jpm.git";
-            rev = "6771439785aea36c76c5aec7c2d7f67df83c46bb";
-          };
-        });
-
-      };
-
       packages = forAllSystems (system: {
         my-new-program = janet-nix.packages.${system}.mkJanet {
           name = "my-new-program";
