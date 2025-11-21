@@ -13,13 +13,6 @@
         });
     in {
       overlay = final: prev: {
-        jpm = prev.jpm.overrideAttrs (old: rec {
-          src = builtins.fetchGit {
-            url = "https://github.com/janet-lang/jpm.git";
-            rev = "6771439785aea36c76c5aec7c2d7f67df83c46bb";
-          };
-        });
-
         janet-nix = with final;
           stdenv.mkDerivation {
             name = "janet-nix";
