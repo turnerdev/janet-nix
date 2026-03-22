@@ -20,7 +20,7 @@ Use `mkJanet` to create derivations for executables:
 ```nix
 {
   packages = forAllSystems (system: {
-    my-new-program = janet-nix.packages.${system}.mkJanet {
+    my-new-program = janet-nix.legacyPackages.${system}.mkJanet {
       name = "my-new-program";
       src = ./.;
       quickbin = "init.janet";
@@ -79,6 +79,9 @@ nix run github:turnerdev/janet-nix
 To generate a list of nix sources from the lockfile. You can pass this list to `mkJanet` with the `extraDeps` attribute.
 
 # Changelog
+
+## v0.2.0
+- **Breaking change:** Moved `mkJanet` from packages to `legacyPackages`
 
 ## v0.1.0
 - **Breaking change:** Renamed `entry` to `quickbin`

@@ -17,13 +17,13 @@
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in {
       packages = forAllSystems (system: {
-        my-new-program = janet-nix.packages.${system}.mkJanet {
+        my-new-program = janet-nix.legacyPackages.${system}.mkJanet {
           name = "my-new-program";
           version = "0.0.1";
           src = ./.;
           quickbin = ./init.janet;
         };
-        jfmt = janet-nix.packages.${system}.mkJanet {
+        jfmt = janet-nix.legacyPackages.${system}.mkJanet {
           name = "jfmt";
           src = builtins.fetchGit {
             url = "https://github.com/andrewchambers/jfmt.git";
