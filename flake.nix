@@ -89,9 +89,6 @@
                 popd
               done
 
-              jpm build
-              jpm install
-
               # if passed a main script, copy it into the project and use it for quickbin
               if [ -n "$main" ]; then
                 quickbin=janet-nix-main.janet
@@ -100,6 +97,9 @@
 
               if [ -n "$quickbin" ]; then
                 jpm quickbin "$quickbin" quickbin-out
+              else
+                jpm build
+                jpm install
               fi
             '';
 
