@@ -108,14 +108,12 @@
 
               # if we have quickbin output, use that as the result
               if [ -f "quickbin-out" ]; then
-                mv quickbin-out $out/bin/$name
+                install -m 755 quickbin-out $out/bin/$name
 
               # else if a binary is explicitly passed to mkJanet, use that
               elif [ -n "$bin" ]; then
-                mv "$JANET_TREE/bin/$bin" $out/bin/$name
+                install -m 755 "$JANET_TREE/bin/$bin" $out/bin/$name
               fi
-
-              chmod +x $out/bin/$name
             '';
           };
       };
@@ -131,9 +129,14 @@
         };
       };
 
+      checks = forAllSystems (system: import ./nix/tests.nix nixpkgsFor.${system});
+
       packages = forAllSystems (system: {
         janet-nix = nixpkgsFor.${system}.janet-nix;
-        mkJanet = nixpkgsFor.${system}.mkJanet;
+      });
+
+      legacyPackages = forAllSystems (system: {
+        inherit (nixpkgsFor.${system}) mkJanet;
       });
 
       defaultPackage =
