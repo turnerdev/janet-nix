@@ -62,6 +62,7 @@
           in stdenv.mkDerivation {
             inherit name version src main quickbin bin sources;
 
+            nativeBuildInputs = [ makeWrapper ];
             buildInputs = [ janet jpm ] ++ buildInputs;
 
             buildPhase = ''
@@ -104,6 +105,7 @@
             '';
 
             installPhase = ''
+              cp -rL "$JANET_TREE/." $out
               mkdir -p $out/bin
 
               # if we have quickbin output, use that as the result
@@ -113,6 +115,9 @@
               # else if a binary is explicitly passed to mkJanet, use that
               elif [ -n "$bin" ]; then
                 install -m 755 "$JANET_TREE/bin/$bin" $out/bin/$name
+                if isScript "$JANET_TREE/bin/$bin"; then
+                  wrapProgram $out/bin/$name --set JANET_PATH "$out/lib"
+                fi
               fi
             '';
           };
