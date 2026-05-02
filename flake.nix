@@ -116,6 +116,14 @@
               elif [ -n "$bin" ]; then
                 install -m 755 "$JANET_TREE/bin/$bin" $out/bin/$name
                 if isScript "$JANET_TREE/bin/$bin"; then
+                  # If :hardcode-syspath is true, jpm hardcodes our local
+                  # syspath which we need to replace with our output path.
+                  #
+                  # Rather than checking to see if that option is set, we use
+                  # --replace which doesn't report an error if no substitution
+                  # is made.
+                  substituteInPlace "$out/bin/$name" \
+                    --replace "$JANET_TREE/lib" "$out/lib"
                   wrapProgram $out/bin/$name --set JANET_PATH "$out/lib"
                 fi
               fi
